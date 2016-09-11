@@ -1,0 +1,22 @@
+{
+  "name": "wmaiouiru.github.io",
+  "version": "1.0.0",
+  "description": "wmaiouiru static website",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wmaiouiru/wmaiouiru.github.io.git"
+  },
+  "author": "William Maio",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wmaiouiru/wmaiouiru.github.io/issues"
+  },
+  "homepage": "https://github.com/wmaiouiru/wmaiouiru.github.io#readme",
+  "devDependencies": {
+    "nwb": "^0.12.0"
+  }
+}
