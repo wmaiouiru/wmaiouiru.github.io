@@ -4,9 +4,10 @@
   "description": "Describe wmaiouiru here",
   "private": true,
   "scripts": {
-    "build": "nwb build-react-app",
+    "build": "nwb build-react-app ./src/index.js ./dist_staging",
+    "build_prod": "nwb build-react-app ./src/index.js ../dist --config nwb.config_prod.js ; python production.py",
     "clean": "nwb clean-app",
-    "start": "nwb serve-react-app",
+    "start": "nwb serve-react-app ./src/index.js",
     "test": "nwb test",
     "test:coverage": "nwb test --coverage",
     "test:watch": "nwb test --server"
