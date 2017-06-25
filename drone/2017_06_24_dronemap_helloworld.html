@@ -1,0 +1,914 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.3/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.0.3/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="http://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-polylinedecorator/1.1.0/leaflet.polylineDecorator.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script>
+      // 2. This code loads the IFrame Player API code asynchronously.
+      var tag = document.createElement('script');
+
+      tag.src = "https://www.youtube.com/iframe_api";
+      var firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+      // 3. This function creates an <iframe> (and YouTube player)
+      //    after the API code downloads.
+      var player;
+      function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+          height: '100%',
+          width: '100%',
+          videoId: 'uGH98uWNIXE',
+          events: {
+            'onReady': onPlayerReady,
+            'onStateChange': onPlayerStateChange
+          }
+        });
+      }
+
+      // 4. The API will call this function when the video player is ready.
+      function onPlayerReady(event) {
+        event.target.playVideo();
+      }
+
+      // 5. The API calls this function when the player's state changes.
+      //    The function indicates that when playing a video (state=1),
+      //    the player should play for six seconds and then stop.
+      var done = false;
+      function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+          setTimeout(stopVideo, 6000);
+          done = true;
+        }
+      }
+      function stopVideo() {
+        player.stopVideo();
+      }    
+      $( document ).ready(function() {
+        $("#draggable").draggable();
+
+        var baseLayerUrl = 'https://api.mapbox.com/styles/v1/mapbox/satellite-streets-v10/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1Ijoid21haW91aXJ1IiwiYSI6ImNpajJkN3hwYjAwMGN0dWtwbGV2ZTAzdHAifQ.3Q0TCWrorExd2iTOa-5NfA'
+        var mymap = L.map('map',
+          { zoomControl:false,maxZoom:22}
+        )
+        mymap.fitBounds([
+              [37.3902, -121.8908],
+              [37.3902, -121.8908]
+        ]);
+        var mapbox_Layer= L.tileLayer(baseLayerUrl,{
+          drawControl: false,
+          maxZoom: 22,
+          maxNativeZoom: 20
+        }).addTo(mymap);
+        var droneLine = [];
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8909, 37.3901])
+          L.marker([37.3901, -121.8909]).addTo(mymap);
+          droneLine.push([37.3901, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.891, 37.3902])
+          L.marker([37.3902, -121.891]).addTo(mymap);
+          droneLine.push([37.3902, -121.891])
+          // console.log([-121.891, 37.3902])
+          L.marker([37.3902, -121.891]).addTo(mymap);
+          droneLine.push([37.3902, -121.891])
+          // console.log([-121.891, 37.3902])
+          L.marker([37.3902, -121.891]).addTo(mymap);
+          droneLine.push([37.3902, -121.891])
+          // console.log([-121.8911, 37.3902])
+          L.marker([37.3902, -121.8911]).addTo(mymap);
+          droneLine.push([37.3902, -121.8911])
+          // console.log([-121.8911, 37.3902])
+          L.marker([37.3902, -121.8911]).addTo(mymap);
+          droneLine.push([37.3902, -121.8911])
+          // console.log([-121.8911, 37.3902])
+          L.marker([37.3902, -121.8911]).addTo(mymap);
+          droneLine.push([37.3902, -121.8911])
+          // console.log([-121.8911, 37.3902])
+          L.marker([37.3902, -121.8911]).addTo(mymap);
+          droneLine.push([37.3902, -121.8911])
+          // console.log([-121.8911, 37.3902])
+          L.marker([37.3902, -121.8911]).addTo(mymap);
+          droneLine.push([37.3902, -121.8911])
+          // console.log([-121.8912, 37.3902])
+          L.marker([37.3902, -121.8912]).addTo(mymap);
+          droneLine.push([37.3902, -121.8912])
+          // console.log([-121.8912, 37.3902])
+          L.marker([37.3902, -121.8912]).addTo(mymap);
+          droneLine.push([37.3902, -121.8912])
+          // console.log([-121.8912, 37.3902])
+          L.marker([37.3902, -121.8912]).addTo(mymap);
+          droneLine.push([37.3902, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.3901])
+          L.marker([37.3901, -121.8912]).addTo(mymap);
+          droneLine.push([37.3901, -121.8912])
+          // console.log([-121.8912, 37.39])
+          L.marker([37.39, -121.8912]).addTo(mymap);
+          droneLine.push([37.39, -121.8912])
+          // console.log([-121.8912, 37.39])
+          L.marker([37.39, -121.8912]).addTo(mymap);
+          droneLine.push([37.39, -121.8912])
+          // console.log([-121.8912, 37.39])
+          L.marker([37.39, -121.8912]).addTo(mymap);
+          droneLine.push([37.39, -121.8912])
+          // console.log([-121.8911, 37.39])
+          L.marker([37.39, -121.8911]).addTo(mymap);
+          droneLine.push([37.39, -121.8911])
+          // console.log([-121.8911, 37.39])
+          L.marker([37.39, -121.8911]).addTo(mymap);
+          droneLine.push([37.39, -121.8911])
+          // console.log([-121.8911, 37.39])
+          L.marker([37.39, -121.8911]).addTo(mymap);
+          droneLine.push([37.39, -121.8911])
+          // console.log([-121.8911, 37.39])
+          L.marker([37.39, -121.8911]).addTo(mymap);
+          droneLine.push([37.39, -121.8911])
+          // console.log([-121.8911, 37.39])
+          L.marker([37.39, -121.8911]).addTo(mymap);
+          droneLine.push([37.39, -121.8911])
+          // console.log([-121.891, 37.39])
+          L.marker([37.39, -121.891]).addTo(mymap);
+          droneLine.push([37.39, -121.891])
+          // console.log([-121.891, 37.39])
+          L.marker([37.39, -121.891]).addTo(mymap);
+          droneLine.push([37.39, -121.891])
+          // console.log([-121.891, 37.39])
+          L.marker([37.39, -121.891]).addTo(mymap);
+          droneLine.push([37.39, -121.891])
+          // console.log([-121.891, 37.39])
+          L.marker([37.39, -121.891]).addTo(mymap);
+          droneLine.push([37.39, -121.891])
+          // console.log([-121.891, 37.39])
+          L.marker([37.39, -121.891]).addTo(mymap);
+          droneLine.push([37.39, -121.891])
+          // console.log([-121.8909, 37.39])
+          L.marker([37.39, -121.8909]).addTo(mymap);
+          droneLine.push([37.39, -121.8909])
+          // console.log([-121.8909, 37.39])
+          L.marker([37.39, -121.8909]).addTo(mymap);
+          droneLine.push([37.39, -121.8909])
+          // console.log([-121.8909, 37.39])
+          L.marker([37.39, -121.8909]).addTo(mymap);
+          droneLine.push([37.39, -121.8909])
+          // console.log([-121.8909, 37.39])
+          L.marker([37.39, -121.8909]).addTo(mymap);
+          droneLine.push([37.39, -121.8909])
+          // console.log([-121.8908, 37.39])
+          L.marker([37.39, -121.8908]).addTo(mymap);
+          droneLine.push([37.39, -121.8908])
+          // console.log([-121.8908, 37.39])
+          L.marker([37.39, -121.8908]).addTo(mymap);
+          droneLine.push([37.39, -121.8908])
+          // console.log([-121.8908, 37.39])
+          L.marker([37.39, -121.8908]).addTo(mymap);
+          droneLine.push([37.39, -121.8908])
+          // console.log([-121.8908, 37.39])
+          L.marker([37.39, -121.8908]).addTo(mymap);
+          droneLine.push([37.39, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8908, 37.3901])
+          L.marker([37.3901, -121.8908]).addTo(mymap);
+          droneLine.push([37.3901, -121.8908])
+          // console.log([-121.8909, 37.3901])
+          L.marker([37.3901, -121.8909]).addTo(mymap);
+          droneLine.push([37.3901, -121.8909])
+          // console.log([-121.8909, 37.3901])
+          L.marker([37.3901, -121.8909]).addTo(mymap);
+          droneLine.push([37.3901, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.891, 37.3902])
+          L.marker([37.3902, -121.891]).addTo(mymap);
+          droneLine.push([37.3902, -121.891])
+          // console.log([-121.891, 37.3902])
+          L.marker([37.3902, -121.891]).addTo(mymap);
+          droneLine.push([37.3902, -121.891])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8909, 37.3902])
+          L.marker([37.3902, -121.8909]).addTo(mymap);
+          droneLine.push([37.3902, -121.8909])
+          // console.log([-121.8908, 37.3902])
+          L.marker([37.3902, -121.8908]).addTo(mymap);
+          droneLine.push([37.3902, -121.8908])
+          // console.log([-121.8908, 37.3902])
+          L.marker([37.3902, -121.8908]).addTo(mymap);
+          droneLine.push([37.3902, -121.8908])
+          // console.log([-121.8908, 37.3902])
+          L.marker([37.3902, -121.8908]).addTo(mymap);
+          droneLine.push([37.3902, -121.8908])
+        var polyline = L.polyline(droneLine, {color: 'red'}).addTo(mymap);
+        // zoom the map to the polyline
+        var decorator = L.polylineDecorator(polyline, {
+            patterns: [
+                // defines a pattern of 10px-wide dashes, repeated every 20px on the line
+                {offset: 0, repeat: 20, symbol: L.Symbol.arrowHead({pixelSize: 10})}
+            ]
+        }).addTo(mymap);
+        mymap.fitBounds(polyline.getBounds())
+        $(".seekLocation").click(function(e){
+          var timeString = $(this).find( ".start" ).text();
+          var seekTime = 0;
+          var lat = parseFloat($(this).find( ".lat" ).text());
+          var lng = parseFloat($(this).find( ".lng" ).text());
+          try{
+            var timeStringSplit = timeString.split(':');
+            seekTime = parseInt(timeStringSplit[2]) + parseInt(timeStringSplit[1])*60 + parseInt(timeStringSplit[0])*60*60
+          } catch (e){
+            console.log('seekTime Error', e)
+            seekTime =0;
+          }
+          // console.log('seekTime',seekTime)
+          player.seekTo(seekTime, true)
+          player.playVideo()
+          mymap.flyTo({lat: lat, lng: lng},22)
+        })
+      })
+    </script>
+  </head>
+  <body>
+    <div style="z-index:10000;position:fixed;right:0;top:0;width:40%;height:50%"  id="player"></div>
+    <div style="z-index:10000;position:fixed;right:0;bottom:0;background:white;height:50%;width:33%">
+      <div class="container" style="width:100%;height:100%;overflow-y:scroll">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Start</th>
+              <th>End</th>
+              <th>Lat</th>
+              <th>Lng</th>
+              <th>Alt</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr class="seekLocation">
+                <td class="start">00:00:01</td>
+                <td class="end">00:00:02</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:02</td>
+                <td class="end">00:00:03</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:03</td>
+                <td class="end">00:00:04</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:04</td>
+                <td class="end">00:00:05</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:05</td>
+                <td class="end">00:00:06</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:06</td>
+                <td class="end">00:00:07</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:07</td>
+                <td class="end">00:00:08</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:08</td>
+                <td class="end">00:00:09</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:09</td>
+                <td class="end">00:00:10</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:10</td>
+                <td class="end">00:00:11</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:11</td>
+                <td class="end">00:00:12</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:12</td>
+                <td class="end">00:00:13</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:13</td>
+                <td class="end">00:00:14</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:14</td>
+                <td class="end">00:00:15</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:15</td>
+                <td class="end">00:00:16</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:16</td>
+                <td class="end">00:00:17</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">13.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:17</td>
+                <td class="end">00:00:18</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">14.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:18</td>
+                <td class="end">00:00:19</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:19</td>
+                <td class="end">00:00:20</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:20</td>
+                <td class="end">00:00:21</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:21</td>
+                <td class="end">00:00:22</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:22</td>
+                <td class="end">00:00:23</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:23</td>
+                <td class="end">00:00:24</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:24</td>
+                <td class="end">00:00:25</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:25</td>
+                <td class="end">00:00:26</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:26</td>
+                <td class="end">00:00:27</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:27</td>
+                <td class="end">00:00:28</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:28</td>
+                <td class="end">00:00:29</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:29</td>
+                <td class="end">00:00:30</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:30</td>
+                <td class="end">00:00:31</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8912</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:31</td>
+                <td class="end">00:00:32</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:32</td>
+                <td class="end">00:00:33</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:33</td>
+                <td class="end">00:00:34</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:34</td>
+                <td class="end">00:00:35</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:35</td>
+                <td class="end">00:00:36</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8911</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:36</td>
+                <td class="end">00:00:37</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:37</td>
+                <td class="end">00:00:38</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:38</td>
+                <td class="end">00:00:39</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:39</td>
+                <td class="end">00:00:40</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:40</td>
+                <td class="end">00:00:41</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:41</td>
+                <td class="end">00:00:42</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:42</td>
+                <td class="end">00:00:43</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:43</td>
+                <td class="end">00:00:44</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:44</td>
+                <td class="end">00:00:45</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:45</td>
+                <td class="end">00:00:46</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:46</td>
+                <td class="end">00:00:47</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:47</td>
+                <td class="end">00:00:48</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:48</td>
+                <td class="end">00:00:49</td>
+                <td class="lat">37.39</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:49</td>
+                <td class="end">00:00:50</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:50</td>
+                <td class="end">00:00:51</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:51</td>
+                <td class="end">00:00:52</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:52</td>
+                <td class="end">00:00:53</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">17.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:53</td>
+                <td class="end">00:00:54</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:54</td>
+                <td class="end">00:00:55</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:55</td>
+                <td class="end">00:00:56</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:56</td>
+                <td class="end">00:00:57</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:57</td>
+                <td class="end">00:00:58</td>
+                <td class="lat">37.3901</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:58</td>
+                <td class="end">00:00:59</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:00:59</td>
+                <td class="end">00:01:00</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:00</td>
+                <td class="end">00:01:01</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:01</td>
+                <td class="end">00:01:02</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.891</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:02</td>
+                <td class="end">00:01:03</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:03</td>
+                <td class="end">00:01:04</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">16.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:04</td>
+                <td class="end">00:01:05</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">15.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:05</td>
+                <td class="end">00:01:06</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">13.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:06</td>
+                <td class="end">00:01:07</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:07</td>
+                <td class="end">00:01:08</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:08</td>
+                <td class="end">00:01:09</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">11.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:09</td>
+                <td class="end">00:01:10</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:10</td>
+                <td class="end">00:01:11</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:11</td>
+                <td class="end">00:01:12</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:12</td>
+                <td class="end">00:01:13</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:13</td>
+                <td class="end">00:01:14</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:14</td>
+                <td class="end">00:01:15</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">13.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:15</td>
+                <td class="end">00:01:16</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8909</td>
+                <td class="alt">12.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:16</td>
+                <td class="end">00:01:17</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">13.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:17</td>
+                <td class="end">00:01:18</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">11.0</td>
+              </tr>
+              <tr class="seekLocation">
+                <td class="start">00:01:18</td>
+                <td class="end">00:01:19</td>
+                <td class="lat">37.3902</td>
+                <td class="lng">-121.8908</td>
+                <td class="alt">8.0</td>
+              </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div id="map" style="
+        z-index: 1000;
+        height:100%;
+        width:60%;
+        min-width:500px;
+        position:fixed;
+        top:0;bottom:0;left:0;right:0;"></div>
+  </body>
+</html>
